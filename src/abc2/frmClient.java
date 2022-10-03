@@ -79,11 +79,16 @@ public class frmClient extends javax.swing.JFrame {
         fcPath = new javax.swing.JFileChooser();
         txtEnter = new javax.swing.JTextField();
         btnSend = new javax.swing.JButton();
-        txtkey = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtAShow = new javax.swing.JTextArea();
         txtPath = new javax.swing.JTextField();
         btnPath = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        cboKey = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,11 +101,11 @@ public class frmClient extends javax.swing.JFrame {
             }
         });
 
-        txtkey.setText("3");
-
         txtAShow.setColumns(20);
         txtAShow.setRows(5);
         jScrollPane2.setViewportView(txtAShow);
+
+        txtPath.setFocusable(false);
 
         btnPath.setText("Path");
         btnPath.addActionListener(new java.awt.event.ActionListener() {
@@ -109,43 +114,77 @@ public class frmClient extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Duong dan");
+
+        jLabel2.setText("Nhap chuoi");
+
+        jLabel3.setText("Key");
+
+        cboKey.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25" }));
+
+        jLabel4.setText("jLabel4");
+
+        jLabel5.setText("Thong tin nhan tu server");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtEnter, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(txtkey, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSend))))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(114, 114, 114)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtEnter)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3)
+                        .addGap(42, 42, 42)
+                        .addComponent(cboKey, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(btnSend)
+                        .addGap(16, 16, 16))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(44, 44, 44)
                         .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(46, 46, 46)
-                        .addComponent(btnPath)))
-                .addContainerGap(103, Short.MAX_VALUE))
+                        .addComponent(btnPath)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPath))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnPath)
+                            .addComponent(jLabel1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtEnter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSend)
-                    .addComponent(txtkey, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(cboKey, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(56, 56, 56))
         );
 
@@ -161,21 +200,20 @@ public class frmClient extends javax.swing.JFrame {
 //            }
             String str = "";
             str = removeAccent(txtEnter.getText().replace("\\s+", " ").trim());
-            System.out.println(str);
-            int key = Integer.parseInt(txtkey.getText().trim());
+//            System.out.println(str);
+            int key = Integer.parseInt(cboKey.getSelectedItem().toString());
+//            System.out.println(cboKey.getSelectedItem().toString());
             if (checkDigit(str) && pattern2.matcher(str).find() && key >= 1 && key <= 25) {
-//                int key = 0;
-//                key = Integer.parseInt(txtkey.getText().trim());
                 ceasar.Nhap(str, key);
 //            System.out.println(ceasar.MaHoa());
                 String tcode = ceasar.MaHoa();
-            System.out.println("tcode: "+tcode);
+//            System.out.println("tcode: "+tcode);
                 Texts t = new Texts(tcode, key);
                 ceasar.clean();
                 objectOutputStream.writeObject(t);
                 objectOutputStream.flush();
                 txtEnter.setText("");
-                System.out.println(t.getStr());
+//                System.out.println(t.getStr());
               
             } else {
                 JOptionPane.showMessageDialog(this, "Vui long nhap lai");
@@ -262,9 +300,17 @@ public class frmClient extends javax.swing.JFrame {
             outputStream = client.getOutputStream();
             objectOutputStream = new ObjectOutputStream(outputStream);
             objectInputStream = new ObjectInputStream(client.getInputStream());
-            while (true) {                
+            
+            while (true) {
+               
+            
                  List<Texts> listOfText = (List<Texts>) objectInputStream.readObject();
+                 if(!listOfText.isEmpty())
+                 {
+                     txtAShow.setText(txtAShow.getText()+ "\n" + "Dem so ky tu");
+                 }
             listOfText.forEach((txt) -> txtAShow.setText(txtAShow.getText().trim() + "\n" + " Chu : " + txt.getStr() + " lan xuat hien: " + txt.getKey()));
+            
                 
             }
 //           
@@ -276,11 +322,16 @@ public class frmClient extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPath;
     private javax.swing.JButton btnSend;
+    private javax.swing.JComboBox<String> cboKey;
     private javax.swing.JFileChooser fcPath;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane2;
     private static javax.swing.JTextArea txtAShow;
     private static javax.swing.JTextField txtEnter;
     private javax.swing.JTextField txtPath;
-    private javax.swing.JTextField txtkey;
     // End of variables declaration//GEN-END:variables
 }

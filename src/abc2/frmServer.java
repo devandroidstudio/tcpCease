@@ -29,12 +29,45 @@ public class frmServer extends javax.swing.JFrame {
     static ServerSocket serverSocket;
     static Socket client;
     static ObjectInputStream objectInputStream;
-     static ObjectOutputStream objectOutputStream;
+    static ObjectOutputStream objectOutputStream;
     static Ceasar ceasar = new Ceasar();
     static DataInputStream dataInputStream;
 
     public frmServer() {
         initComponents();
+    }
+
+    private static List<Texts> countCharInArray(String str) {
+          List<Texts> listText = new ArrayList<>();
+                int count = 0;
+
+                Map<String, Integer> map = new HashMap<String, Integer>();
+
+                
+
+                System.out.println(str);
+                char temp;
+                char[] ch = str.toCharArray();//abc => [a,b,c]
+                System.out.println("ky tu" + Arrays.toString(ch));
+                for (char c : ch) {
+
+                    for (int i = 0; i < ceasar.GiaiMa().length(); i++) {
+                        System.out.println(ceasar.GiaiMa());
+                        temp = ceasar.GiaiMa().charAt(i);
+                        System.out.println(temp);
+                        if (temp == c) {
+                            count++;
+
+                        }
+                    }
+                    map.put(String.valueOf(c), count);
+                    count = 0;
+                }
+                for (String key : map.keySet()) {
+                    System.out.println(key + "" + map.get(key));
+                    listText.add(new Texts(key, map.get(key)));
+                }
+                return listText;
     }
 
     /**
@@ -48,26 +81,37 @@ public class frmServer extends javax.swing.JFrame {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         txtAShow = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         txtAShow.setColumns(20);
         txtAShow.setRows(5);
+        txtAShow.setFocusable(false);
         jScrollPane2.setViewportView(txtAShow);
+
+        jLabel1.setText("Thong tin nhan tu client");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel1)))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(92, Short.MAX_VALUE))
         );
@@ -110,66 +154,34 @@ public class frmServer extends javax.swing.JFrame {
         });
 
         try {
-              
-        serverSocket = new ServerSocket(8888);
-        client = serverSocket.accept();
-        System.out.println("Server have been connected with client");
-        objectInputStream = new ObjectInputStream(client.getInputStream());
-        objectOutputStream = new ObjectOutputStream(client.getOutputStream());
-//        dataInputStream = new DataInputStream(client.getInputStream());
-//        while (!str.equals("exit")) {            
-//            str = dataInputStream.readUTF();
-//            txtAShow.setText(txtAShow.getText().trim() + "\n" + str);
-//       }
-            while (true) {                
+
+            serverSocket = new ServerSocket(8888);
+            client = serverSocket.accept();
+            System.out.println("Server have been connected with client");
+            objectInputStream = new ObjectInputStream(client.getInputStream());
+            objectOutputStream = new ObjectOutputStream(client.getOutputStream());
+            while (true) {
                 Texts t = (Texts) objectInputStream.readObject();
                 System.out.println(t.getStr());
                 ceasar.WirteData(t.getStr(), t.getKey());
-            txtAShow.setText(txtAShow.getText() + "\n" +"Chuoi ma hoa: "+ t.getStr() + " and key:  " + t.getKey());
-            List<Texts> listText = new ArrayList<>();
-            int count = 0;
-            int max = 0;
-            Map<String, Integer> map = new HashMap<String, Integer>();
-
-            String str = ceasar.GiaiMa();
-            txtAShow.setText(txtAShow.getText() + "\n" +"Chuoi giai ma: "+ str + " and key:  " + t.getKey());
-            System.out.println(str);
-            char temp;
-            char[] ch = str.toCharArray();//abc => [a,b,c]
-            System.out.println("ky tu"+Arrays.toString(ch));
-            for (char c : ch) {
-
-                for (int i = 0; i < ceasar.GiaiMa().length(); i++) {
-                    System.out.println(ceasar.GiaiMa());
-                    temp = ceasar.GiaiMa().charAt(i);
-                    System.out.println(temp);
-                    if (temp == c) {
-                        count++;
-
-                    }
+                if(!t.getStr().isEmpty())
+                {
+                    txtAShow.setText(txtAShow.getText()+ "\n" + "Chuoi moi");
                 }
-                 map.put(String.valueOf(c), count);
-                count = 0;
-            }
-            Set<String> set = map.keySet();
-            for (String key : set) {
-                System.out.println(key + "" + map.get(key));
-                listText.add(new Texts(key, map.get(key)));
-            }
-            objectOutputStream.writeObject(listText);
-            
-            }
-            
-            
-            
+                txtAShow.setText(txtAShow.getText() + "\n" + "Chuoi ma hoa: " + t.getStr() + " and key:  " + t.getKey());
+                txtAShow.setText(txtAShow.getText() + "\n" + "Chuoi giai ma: " + ceasar.GiaiMa() + " and key:  " + t.getKey());
+                
+                objectOutputStream.writeObject(countCharInArray(ceasar.GiaiMa().replace(" ", "")));
 
-          
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private static javax.swing.JTextArea txtAShow;
     // End of variables declaration//GEN-END:variables

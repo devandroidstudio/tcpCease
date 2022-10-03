@@ -149,7 +149,7 @@ public class Ceasar {
               
               
           }
-          return result.replace(" ", "");
+          return result;
       }
     
 }
