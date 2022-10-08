@@ -41,20 +41,15 @@ public class frmServer extends javax.swing.JFrame {
           List<Texts> listText = new ArrayList<>();
                 int count = 0;
 
-                Map<String, Integer> map = new HashMap<String, Integer>();
-
-                
-
-                System.out.println(str);
+                Map<String, Integer> map = new HashMap<String, Integer>();                
                 char temp;
-                char[] ch = str.toCharArray();//abc => [a,b,c]
-                System.out.println("ky tu" + Arrays.toString(ch));
+                char[] ch = str.toCharArray();
                 for (char c : ch) {
 
                     for (int i = 0; i < ceasar.GiaiMa().length(); i++) {
-                        System.out.println(ceasar.GiaiMa());
+                        
                         temp = ceasar.GiaiMa().charAt(i);
-                        System.out.println(temp);
+                        
                         if (temp == c) {
                             count++;
 
@@ -64,7 +59,6 @@ public class frmServer extends javax.swing.JFrame {
                     count = 0;
                 }
                 for (String key : map.keySet()) {
-                    System.out.println(key + "" + map.get(key));
                     listText.add(new Texts(key, map.get(key)));
                 }
                 return listText;
@@ -162,7 +156,6 @@ public class frmServer extends javax.swing.JFrame {
             objectOutputStream = new ObjectOutputStream(client.getOutputStream());
             while (true) {
                 Texts t = (Texts) objectInputStream.readObject();
-                System.out.println(t.getStr());
                 ceasar.WirteData(t.getStr(), t.getKey());
                 if(!t.getStr().isEmpty())
                 {

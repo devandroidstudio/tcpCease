@@ -37,10 +37,8 @@ public class frmClient extends javax.swing.JFrame {
     static ObjectOutputStream objectOutputStream;
     static OutputStream outputStream;
     static ObjectInputStream objectInputStream;
-//    static DataInputStream dataInputStream;
-//    static DataOutputStream dataOutputStream;
     static Ceasar ceasar = new Ceasar();
-    static Pattern pattern = Pattern.compile("^[0-9]{1,5}+$", Pattern.CASE_INSENSITIVE);
+//    static Pattern pattern = Pattern.compile("^[0-9]{1,25}", Pattern.CASE_INSENSITIVE);
     static Pattern pattern2 = Pattern.compile("^[a-zA-Z \\s]+$", Pattern.CASE_INSENSITIVE);
     public frmClient() {
         initComponents();
@@ -61,10 +59,7 @@ public class frmClient extends javax.swing.JFrame {
 
         String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-        System.out.println(temp);
-        System.out.println(pattern.matcher(temp).replaceAll(""));
         return pattern.matcher(temp).replaceAll("");
-        
     }
 
     /**
@@ -87,7 +82,6 @@ public class frmClient extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         cboKey = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -122,8 +116,6 @@ public class frmClient extends javax.swing.JFrame {
 
         cboKey.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25" }));
 
-        jLabel4.setText("jLabel4");
-
         jLabel5.setText("Thong tin nhan tu server");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -156,24 +148,17 @@ public class frmClient extends javax.swing.JFrame {
                         .addGap(44, 44, 44)
                         .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(46, 46, 46)
-                        .addComponent(btnPath)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addComponent(btnPath)))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnPath)
-                            .addComponent(jLabel1)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4)))
+                .addGap(47, 47, 47)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPath)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -195,32 +180,21 @@ public class frmClient extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         try {
-//            while (!txtEnter.getText().isEmpty()) {                
-//              
-//            }
             String str = "";
             str = removeAccent(txtEnter.getText().replace("\\s+", " ").trim());
-//            System.out.println(str);
             int key = Integer.parseInt(cboKey.getSelectedItem().toString());
-//            System.out.println(cboKey.getSelectedItem().toString());
             if (checkDigit(str) && pattern2.matcher(str).find() && key >= 1 && key <= 25) {
                 ceasar.Nhap(str, key);
-//            System.out.println(ceasar.MaHoa());
                 String tcode = ceasar.MaHoa();
-//            System.out.println("tcode: "+tcode);
                 Texts t = new Texts(tcode, key);
                 ceasar.clean();
                 objectOutputStream.writeObject(t);
                 objectOutputStream.flush();
                 txtEnter.setText("");
-//                System.out.println(t.getStr());
               
             } else {
                 JOptionPane.showMessageDialog(this, "Vui long nhap lai");
-            }
-
-//            dataOutputStream.writeUTF(str);
-//            dataOutputStream.flush();
+            }         
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -243,7 +217,6 @@ public class frmClient extends javax.swing.JFrame {
                            {
                                break;
                            }
-                           System.out.println(line);
                         
                          txtEnter.setText(txtEnter.getText() + " " +line);
                          
@@ -327,7 +300,6 @@ public class frmClient extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane2;
     private static javax.swing.JTextArea txtAShow;
