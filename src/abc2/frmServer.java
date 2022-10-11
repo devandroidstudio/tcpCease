@@ -30,38 +30,54 @@ public class frmServer extends javax.swing.JFrame {
     static Socket client;
     static ObjectInputStream objectInputStream;
     static ObjectOutputStream objectOutputStream;
-    static Ceasar ceasar = new Ceasar();
-    static DataInputStream dataInputStream;
+
+    
 
     public frmServer() {
         initComponents();
     }
+    private static void tryReConnect()
+        {
+            try
+            {
+                serverSocket.close();
+                //empty my old lost connection and let it get by garbage col. immediately 
+                client=null;
+                System.gc();
+                //Wait a new client Socket connection and address this to my local variable
+                client= serverSocket.accept(); // Waiting for another Connection
+                System.out.println("Connection established...");
+            }catch (Exception e) {
+                String message="ReConnect not successful "+e.getMessage();
+                System.out.println(message);
+            }
+        }
 
-    private static List<Texts> countCharInArray(String str) {
-          List<Texts> listText = new ArrayList<>();
-                int count = 0;
+    private static List<Texts> countCharInArray(String str, Ceasar ceasar) {
+        List<Texts> listText = new ArrayList<>();
+        int count = 0;
 
-                Map<String, Integer> map = new HashMap<String, Integer>();                
-                char temp;
-                char[] ch = str.toCharArray();
-                for (char c : ch) {
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        char temp;
+        char[] ch = str.toCharArray();
+        for (char c : ch) {
 
-                    for (int i = 0; i < ceasar.GiaiMa().length(); i++) {
-                        
-                        temp = ceasar.GiaiMa().charAt(i);
-                        
-                        if (temp == c) {
-                            count++;
+            for (int i = 0; i < ceasar.GiaiMa().length(); i++) {
 
-                        }
-                    }
-                    map.put(String.valueOf(c), count);
-                    count = 0;
+                temp = ceasar.GiaiMa().charAt(i);
+
+                if (temp == c) {
+                    count++;
+
                 }
-                for (String key : map.keySet()) {
-                    listText.add(new Texts(key, map.get(key)));
-                }
-                return listText;
+            }
+            map.put(String.valueOf(c), count);
+            count = 0;
+        }
+        for (String key : map.keySet()) {
+            listText.add(new Texts(key, map.get(key)));
+        }
+        return listText;
     }
 
     /**
@@ -146,32 +162,35 @@ public class frmServer extends javax.swing.JFrame {
                 new frmServer().setVisible(true);
             }
         });
-
+        serverSocket = new ServerSocket(8888);
+        System.out.println("Server is empty");
+      
         try {
-
-            serverSocket = new ServerSocket(8888);
             client = serverSocket.accept();
             System.out.println("Server have been connected with client");
             objectInputStream = new ObjectInputStream(client.getInputStream());
             objectOutputStream = new ObjectOutputStream(client.getOutputStream());
+            Ceasar ceasar = null;
             while (true) {
                 Texts t = (Texts) objectInputStream.readObject();
-                ceasar.WirteData(t.getStr(), t.getKey());
-                if(!t.getStr().isEmpty())
-                {
-                    txtAShow.setText(txtAShow.getText()+ "\n" + "Chuoi moi");
+                ceasar = new Ceasar(t.getStr(), t.getKey());
+                if (!t.getStr().isEmpty()) {
+                    txtAShow.setText(txtAShow.getText() + "\n" + "Chuoi moi");
                 }
                 txtAShow.setText(txtAShow.getText() + "\n" + "Chuoi ma hoa: " + t.getStr() + " and key:  " + t.getKey());
                 txtAShow.setText(txtAShow.getText() + "\n" + "Chuoi giai ma: " + ceasar.GiaiMa() + " and key:  " + t.getKey());
                 
-                objectOutputStream.writeObject(countCharInArray(ceasar.GiaiMa().replace(" ", "")));
-
+                objectOutputStream.writeObject(countCharInArray(ceasar.GiaiMa().replace(" ", ""), ceasar));
+                objectOutputStream.flush();
+               
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+        
         }
+           
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

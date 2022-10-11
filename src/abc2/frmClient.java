@@ -35,9 +35,7 @@ public class frmClient extends javax.swing.JFrame {
      */
     static Socket client;
     static ObjectOutputStream objectOutputStream;
-    static OutputStream outputStream;
     static ObjectInputStream objectInputStream;
-    static Ceasar ceasar = new Ceasar();
 //    static Pattern pattern = Pattern.compile("^[0-9]{1,25}", Pattern.CASE_INSENSITIVE);
     static Pattern pattern2 = Pattern.compile("^[a-zA-Z \\s]+$", Pattern.CASE_INSENSITIVE);
     public frmClient() {
@@ -178,16 +176,15 @@ public class frmClient extends javax.swing.JFrame {
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
         // TODO add your handling code here:
-
+        
         try {
             String str = "";
             str = removeAccent(txtEnter.getText().replace("\\s+", " ").trim());
             int key = Integer.parseInt(cboKey.getSelectedItem().toString());
             if (checkDigit(str) && pattern2.matcher(str).find() && key >= 1 && key <= 25) {
-                ceasar.Nhap(str, key);
+                Ceasar ceasar = new Ceasar(str, key);
                 String tcode = ceasar.MaHoa();
                 Texts t = new Texts(tcode, key);
-                ceasar.clean();
                 objectOutputStream.writeObject(t);
                 objectOutputStream.flush();
                 txtEnter.setText("");
@@ -208,15 +205,14 @@ public class frmClient extends javax.swing.JFrame {
             try {
                 txtPath.setText(fcPath.getSelectedFile().getCanonicalPath());
                 if (!txtPath.getText().isEmpty()) {
+                    
                     FileReader fr = new FileReader(new File(txtPath.getText().trim()));
                        BufferedReader br = new BufferedReader(fr);
                        String line = "";
-                       while (true) {
-                            line = br.readLine();
-                           if(line.isEmpty())
-                           {
-                               break;
-                           }
+                       
+                       while ((line = br.readLine()) != null) {
+                            
+                        
                         
                          txtEnter.setText(txtEnter.getText() + " " +line);
                          
@@ -269,24 +265,20 @@ public class frmClient extends javax.swing.JFrame {
 
         try {
             client = new Socket("localhost", 8888);
-
-            outputStream = client.getOutputStream();
-            objectOutputStream = new ObjectOutputStream(outputStream);
+            objectOutputStream = new ObjectOutputStream(client.getOutputStream());
             objectInputStream = new ObjectInputStream(client.getInputStream());
             
             while (true) {
-               
-            
                  List<Texts> listOfText = (List<Texts>) objectInputStream.readObject();
                  if(!listOfText.isEmpty())
                  {
                      txtAShow.setText(txtAShow.getText()+ "\n" + "Dem so ky tu");
                  }
+                 
             listOfText.forEach((txt) -> txtAShow.setText(txtAShow.getText().trim() + "\n" + " Chu : " + txt.getStr() + " lan xuat hien: " + txt.getKey()));
             
                 
-            }
-//           
+            } 
         } catch (Exception e) {
             e.printStackTrace();
         }
